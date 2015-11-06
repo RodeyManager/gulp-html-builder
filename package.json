@@ -1,0 +1,34 @@
+{
+  "name": "gulp-html-builder",
+  "version": "1.0.0",
+  "description": "对html中引入的js文件进行合并压缩再替换",
+  "main": "index.js",
+  "directories": {
+    "example": "example"
+  },
+  "scripts": {
+    "test": "builder"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RodeyManager/gulp-html-builder.git"
+  },
+  "keywords": [
+    "gulp",
+    "html",
+    "js",
+    "javascript"
+  ],
+  "author": "Rodey",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/RodeyManager/gulp-html-builder/issues"
+  },
+  "homepage": "https://github.com/RodeyManager/gulp-html-builder#readme",
+  "devDependencies": {
+    "jsmin2": "^1.1.7",
+    "mkdirp": "^0.5.1",
+    "through2": "^2.0.0",
+    "uglifycss": "0.0.18"
+  }
+}
