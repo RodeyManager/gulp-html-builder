@@ -10,11 +10,11 @@ var fs          = require('fs'),
     Tool        = require('./tools');
 
 /*
-<!-- builder: app.min.css -->
-<link rel="stylesheet" href="assets/css/a.css"/>
-    <link rel="stylesheet" href="assets/css/b.css" ignore/>
-<!-- builder end -->
-*/
+ <!-- builder: app.min.css -->
+ <link rel="stylesheet" href="assets/css/a.css"/>
+ <link rel="stylesheet" href="assets/css/b.css" ignore/>
+ <!-- builder end -->
+ */
 
 var buildRegx   = new RegExp('<!--\\s*builder:\\s*([\\s\\S]*?)\\s*-->([\\s\\S]*?)<!--\\s*builder\\s+end\\s*-->', 'gi'),
     linkRegx    = new RegExp('<link\\s+[\\s\\S]*?>[\\s\\S]*?<*\\/*>*', 'gi'),
@@ -28,15 +28,15 @@ var buildRegx   = new RegExp('<!--\\s*builder:\\s*([\\s\\S]*?)\\s*-->([\\s\\S]*?
 var html = Tool.getFileContent('example/build.html');
 var rlink = html.replace(buildRegx, function($1){
 
-        $1 = Tool.trim($1);
-        var ms = buildRegx.exec($1);
-        buildRegx.lastIndex = 0;
-        var buildedFile = Tool.trim(ms[1]);
-        var fileLink = callBuildReplace($1),
-            type = Tool.getExtname(buildedFile);
-        return Tool.inserTag(type, fileLink);
+    $1 = Tool.trim($1);
+    var ms = buildRegx.exec($1);
+    buildRegx.lastIndex = 0;
+    var buildedFile = Tool.trim(ms[1]);
+    var fileLink = callBuildReplace($1),
+        type = Tool.getExtname(buildedFile);
+    return Tool.inserTag(type, fileLink);
 
-    });
+});
 //console.log(rlink);
 
 
@@ -46,11 +46,11 @@ function callBuildReplace(text, callback){
     buildRegx.lastIndex = 0;
     //console.log(ms);
 
-    //获取指定build后的文件名称
+    //鑾峰彇鎸囧畾build鍚庣殑鏂囦欢鍚嶇О
     var buildedFile = Tool.trim(ms[1]);
     //console.log(buildedFile);
 
-    //获取需要编译的文件列表
+    //鑾峰彇闇�瑕佺紪璇戠殑鏂囦欢鍒楄〃
     var fileList = [], type = Tool.getExtname(buildedFile);
     //console.log(type);
     if('css' === type){
@@ -63,7 +63,7 @@ function callBuildReplace(text, callback){
         file = path.resolve('dist/assets/'+ type +'/', buildedFile);
     //console.log(fileList);
 
-    //将读取的内容进行压缩
+    //灏嗚鍙栫殑鍐呭杩涜鍘嬬缉
     if('css' === type){
         content = uglifycss.processFiles(fileList, {});
     }
@@ -75,7 +75,7 @@ function callBuildReplace(text, callback){
     }
     console.log(content);
 
-    //将内容写出到文件
+    //灏嗗唴瀹瑰啓鍑哄埌鏂囦欢
     var isWrite = Tool.writeFile(file, content);
     if(isWrite)
         return file;
