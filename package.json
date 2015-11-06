@@ -1,6 +1,6 @@
 {
   "name": "gulp-html-builder",
-  "version": "1.0.0",
+  "version": "0.0.2",
   "description": "对html中引入的js文件进行合并压缩再替换",
   "main": "index.js",
   "directories": {

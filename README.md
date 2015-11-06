@@ -34,6 +34,23 @@ gulp.src('src/buildJs.html')
 });
 ```
 
+## Html
+```html
+
+    <!-- builder: app.min.css -->
+    <link rel="stylesheet" href="assets/css/a.css"/>
+    <link rel="stylesheet" href="assets/css/b.css" ignore/>
+    <!-- builder end -->
+
+```
+```html
+    <!-- builder: main.min.js -->
+    <script src="assets/js/a.js"></script>
+    <script src="assets/js/b.js"></script>
+    <script src="assets/js/c.js"></script>
+    <!-- builder end -->
+```
+
 ## Options
 ```javascript
 
