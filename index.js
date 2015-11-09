@@ -1,7 +1,7 @@
 /**
  * Created by Rodey on 2015/11/6.
  *
- * ºÏ²¢htmlÖĞµÄlinkºÍscript±êÇ©
+ * åˆå¹¶htmlä¸­çš„linkå’Œscriptæ ‡ç­¾
  * exp1:
  *      <!-- builder: app.min.css -->
  *      <link rel="stylesheet" href="example/assets/css/a.css"/>
@@ -24,12 +24,12 @@ var fs          = require('fs'),
     PluginError = require('gulp-util').PluginError,
     Tool        = require('./tools');
 
-//²å¼şÃû³Æ
+//æ’ä»¶åç§°
 var PLUGIN_NAME = 'gulp-html-builder';
 
 /**
- * ¶¨ÒåÆ¥ÅäÕıÔò
-  * @type {RegExp}
+ * å®šä¹‰åŒ¹é…æ­£åˆ™
+ * @type {RegExp}
  */
 var buildRegx   = new RegExp('<!--\\s*builder:\\s*([\\s\\S]*?)\\s*-->([\\s\\S]*?)<!--\\s*builder\\s+end\\s*-->', 'gi'),
     linkRegx    = new RegExp('<link\\s+[\\s\\S]*?>[\\s\\S]*?<*\\/*>*', 'gi'),
@@ -38,11 +38,11 @@ var buildRegx   = new RegExp('<!--\\s*builder:\\s*([\\s\\S]*?)\\s*-->([\\s\\S]*?
     srcRegx     = new RegExp('\\s*(src)="+([\\s\\S]*?)"');
 
 /**
- * ±àÒëÆ¥ÅäµÄÁ´½ÓµØÖ·
- * ²¢ºÏ²¢³ÉĞÂÎÄ¼ş
- * @param text      Ò³ÃæÖĞÃ¿Ò»¸öbuilderÖ®¼äµÄÄÚÈİ
- * @param file      ´«µİµÄÎÄ¼şÁ÷
- * @param options   Ñ¹Ëõ¿ØÖÆÑ¡Ïî
+ * ç¼–è¯‘åŒ¹é…çš„é“¾æ¥åœ°å€
+ * å¹¶åˆå¹¶æˆæ–°æ–‡ä»¶
+ * @param text      é¡µé¢ä¸­æ¯ä¸€ä¸ªbuilderä¹‹é—´çš„å†…å®¹
+ * @param file      ä¼ é€’çš„æ–‡ä»¶æµ
+ * @param options   å‹ç¼©æ§åˆ¶é€‰é¡¹
  * @returns {*}
  */
 function callBuildReplace(text, file, options){
@@ -50,21 +50,21 @@ function callBuildReplace(text, file, options){
     var ms              = buildRegx.exec(text);
     buildRegx.lastIndex = 0;
 
-    //»ñÈ¡Ö¸¶¨buildºóµÄÎÄ¼şÃû³Æ
+    //è·å–æŒ‡å®šbuildåçš„æ–‡ä»¶åç§°
     var buildedFile     = Tool.trim(ms[1]),
         parentFile      = path.normalize(file.path),
-    //»ñÈ¡ĞèÒª±àÒëµÄÎÄ¼şÁĞ±í
+    //è·å–éœ€è¦ç¼–è¯‘çš„æ–‡ä»¶åˆ—è¡¨
         fileList        = [],
-    //»ñÈ¡±àÒëÎÄ¼şÀàĞÍ
+    //è·å–ç¼–è¯‘æ–‡ä»¶ç±»å‹
         type            = Tool.getExtname(buildedFile),
-    //ºÏ²¢ºóµÄÄÚÈİ
+    //åˆå¹¶åçš„å†…å®¹
         content         = '';
 
-    //Ğ´ÈëÎÄ¼şµÄÂ·¾¶
+    //å†™å…¥æ–‡ä»¶çš„è·¯å¾„
     var baseDir         = options.baseDir || 'dist/assets/',
         jsDir           = options.jsDir || 'js',
         cssDir          = options.cssDir || 'css';
-    //µ¼³öÎÄ¼şÂ·¾¶
+    //å¯¼å‡ºæ–‡ä»¶è·¯å¾„
     var dir             = 'css' === type ? cssDir : 'js' === type ? jsDir : baseDir;
     var execteFile      = Tool.restructPath(baseDir, dir) + '/' + buildedFile;
     //console.log(execteFile);
@@ -77,7 +77,7 @@ function callBuildReplace(text, file, options){
     }
     //console.log(fileList);
 
-    //½«¶ÁÈ¡µÄÄÚÈİ½øĞĞÑ¹Ëõ
+    //å°†è¯»å–çš„å†…å®¹è¿›è¡Œå‹ç¼©
     if('css' === type){
         content         = uglifycss.processFiles(fileList.map(function(item){
             var p       = path.normalize(path.dirname(file.path) + path.sep + item);
@@ -93,7 +93,7 @@ function callBuildReplace(text, file, options){
     }
     //console.log(content);
 
-    //½«ÄÚÈİĞ´³öµ½ÎÄ¼ş
+    //å°†å†…å®¹å†™å‡ºåˆ°æ–‡ä»¶
     var isWrite         = Tool.writeFile(execteFile, content);
     if(isWrite)
         return execteFile;
@@ -102,10 +102,10 @@ function callBuildReplace(text, file, options){
 }
 
 /**
- * »ñÈ¡ĞèÒªºÏ²¢µÄÎÄ¼şÁĞ±í
- * @param text          µ¥ĞĞ±êÇ©ÄÚÈİ
- * @param regx          Æ¥Åäµ¥ĞĞ±êÇ©ÕıÔò
- * @param sourceRegx    Æ¥ÅäÁ´½ÓµØÖ·ÕıÔò
+ * è·å–éœ€è¦åˆå¹¶çš„æ–‡ä»¶åˆ—è¡¨
+ * @param text          å•è¡Œæ ‡ç­¾å†…å®¹
+ * @param regx          åŒ¹é…å•è¡Œæ ‡ç­¾æ­£åˆ™
+ * @param sourceRegx    åŒ¹é…é“¾æ¥åœ°å€æ­£åˆ™
  * @returns {Array}
  */
 function getFileList(text, regx, sourceRegx){
@@ -121,9 +121,9 @@ function getFileList(text, regx, sourceRegx){
 
 
 /**
- * »ñÈ¡±àÒëºóµÄÎÄ¼şÄÚÈİ
- * @param file      ÎÄ¼şÁ÷
- * @param options   ¿ØÖÆÑ¡Ïî
+ * è·å–ç¼–è¯‘åçš„æ–‡ä»¶å†…å®¹
+ * @param file      æ–‡ä»¶æµ
+ * @param options   æ§åˆ¶é€‰é¡¹
  * @returns {string}
  */
 var getContent = function(file, options){
@@ -148,7 +148,7 @@ var getContent = function(file, options){
     return content;
 };
 
-//Ö÷Ìåº¯Êı
+//ä¸»ä½“å‡½æ•°
 var htmlBuilder = function(options){
 
     return through.obj(function(file, enc, next){

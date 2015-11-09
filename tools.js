@@ -9,19 +9,19 @@ var fs      = require('fs'),
 var Tools = function(){};
 
 Tools.prototype = {
-    //»ñÈ¡ÎÄ¼şÄÚÈİ
+    //è·å–æ–‡ä»¶å†…å®¹
     getFileContent: function(file){
         if(!fs.existsSync(file)) throw new Error('Cannot fond file: ' + file);
         return fs.readFileSync(file, 'utf8');
     },
 
-    //¸ù¾İÖ¸¶¨µÄÕıÔòËÑË÷Æ¥ÅäµÄÄÚÈİ
+    //æ ¹æ®æŒ‡å®šçš„æ­£åˆ™æœç´¢åŒ¹é…çš„å†…å®¹
     matchs: function(str, regx){
         var ms = str.match(regx);
         return ms;
     },
 
-    //½«×Ö·û´®×ªÎªjson
+    //å°†å­—ç¬¦ä¸²è½¬ä¸ºjson
     toJSON: function(str){
         var data = str.replace(/\n*\t*\r*\s*/gi, '')
             .replace(/'|"/gi, '"')
@@ -37,12 +37,12 @@ Tools.prototype = {
         }
     },
 
-    //È¥³ıÊ×Î»¿Õ°×
+    //å»é™¤é¦–ä½ç©ºç™½
     trim: function(text){
         return text.replace(/\n*\r*\t*/gi, '').replace(/^\s*|\s*$/i, '');
     },
 
-    //Ğ´³öÎÄ¼ş
+    //å†™å‡ºæ–‡ä»¶
     writeFile: function(file, text, callback){
         var filePath = path.dirname(file);
         if(!fs.existsSync(filePath)){
@@ -52,7 +52,7 @@ Tools.prototype = {
         return fs.existsSync(file);
     },
 
-    //Ìæ»»±êÇ©
+    //æ›¿æ¢æ ‡ç­¾
     inserTag: function(type, link, options){
         var attrs = this.parseData(options);
         if('css' === type)
@@ -72,7 +72,7 @@ Tools.prototype = {
         return s;
     },
 
-    //ÖØ¹¹Â·¾¶
+    //é‡æ„è·¯å¾„
     restructPath: function(base, epath){
 
         //like:  base: 'dist/assets';  epath: 'dist/assets/js'
@@ -91,7 +91,7 @@ Tools.prototype = {
         return base.replace(/\/$/i, '/') + '/' + epath.replace(/^\//i, '');
     },
 
-    //»ñÈ¡ÎÄ¼ş¿ØÖÆÃû
+    //è·å–æ–‡ä»¶æ§åˆ¶å
     getExtname: function(file){
         return path.extname(file).replace(/\./gi, '');
     }
