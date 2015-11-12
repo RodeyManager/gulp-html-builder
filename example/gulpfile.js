@@ -3,6 +3,7 @@
  */
 
 var gulp        = require('gulp'),
+    watch       = require('gulp-watch'),
     del         = require('del'),
     htmlBuilder = require('../index');
 
@@ -56,4 +57,10 @@ gulp.task('clean', function(){
 
 });
 
-gulp.task('default', ['clean', 'build.css', 'build.js', 'build.html']);
+gulp.task('watch', function(){
+
+    gulp.watch('src/**/*', ['clean', 'build.css', 'build.js', 'build.html']);
+
+});
+
+gulp.task('default', ['clean', 'build.css', 'build.js', 'build.html', 'watch']);

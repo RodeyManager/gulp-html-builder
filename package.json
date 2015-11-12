@@ -1,6 +1,6 @@
 {
   "name": "gulp-html-builder",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "对html中引入的js文件进行合并压缩再替换",
   "main": "index.js",
   "directories": {
@@ -27,7 +27,8 @@
   "homepage": "https://github.com/RodeyManager/gulp-html-builder#readme",
   "devDependencies": {
     "del": "^2.0.2",
-    "gulp": "^3.9.0"
+    "gulp": "^3.9.0",
+    "gulp-watch": "^4.3.5"
   },
   "dependencies": {
     "gulp-util": "^3.0.7",

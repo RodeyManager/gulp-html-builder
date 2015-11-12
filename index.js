@@ -23,7 +23,7 @@ var fs          = require('fs'),
     jsmin       = require('jsmin2'),
     uglifycss   = require('uglifycss'),
     PluginError = require('gulp-util').PluginError,
-    Tool        = require('./tools');
+    Tool        = require('./lib/tools');
 
 //插件名称
 var PLUGIN_NAME = 'gulp-html-builder';

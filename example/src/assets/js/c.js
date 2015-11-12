@@ -4,5 +4,5 @@
 
 document.body.addEventListener('click', function(evt){
     var text = document.querySelector('#content').innerHTML;
-    alert(text);
+    console.log(text);
 }, false);
