@@ -2,13 +2,14 @@
  * Created by Rodey on 2015/11/6.
  *
  * 合并html中的link和script标签
+ * 生成文件名中添加 {{ _hash }}  将会在文件名中带上hash值
  * exp1:
  *      <!-- builder: app.min.css -->
  *      <link rel="stylesheet" href="example/assets/css/a.css"/>
  *      <link rel="stylesheet" href="example/assets/css/b.css" ignore/>
  *      <!-- builder end -->
  *
- *      <!-- builder: mian.js -->
+ *      <!-- builder: mian{{ _hash }}.js -->
  *      <script src="example/assets/js/a.js"></script>
  *      <script src="example/assets/js/b.js"></script>
  *      <script src="example/assets/js/c.js"></script>
@@ -71,7 +72,6 @@ function callBuildReplace(text, file, options){
     else if('js' === type){
         fileList        = getFileList(Tool.trim(ms[2]), scriptRegx, srcRegx);
     }
-    //console.log(fileList);
 
     //将读取的内容进行压缩
     if('css' === type){
@@ -87,7 +87,6 @@ function callBuildReplace(text, file, options){
         });
         content         = jsmin(content, options).code;
     }
-    //console.log(content);
 
     //文件hash值
     var hashRegx = /([\s\S]+?)\{\{\s*([\s\S]*?)[@|$]*hash\s*\}\}(.[\s\S]+?)$/gi;
@@ -96,7 +95,7 @@ function callBuildReplace(text, file, options){
         hashRegx.lastIndex = 0;
         var bs = hashRegx.exec(buildedFile);
         buildedFile = bs[1] + bs[2] + hash + bs[3];
-        console.log(bs, buildedFile, hash);
+        //console.log(bs, buildedFile, hash);
     }
 
     //导出文件路径
@@ -121,7 +120,7 @@ function callBuildReplace(text, file, options){
  * @returns {Array}
  */
 function getFileList(text, regx, sourceRegx){
-    //var ts = text.match(linkRegx);
+
     var files = [];
     text.replace(regx, function($1){
         var ms = sourceRegx.exec($1);
@@ -172,7 +171,6 @@ var htmlBuilder = function(options){
         if (file.isBuffer()) {
             try {
                 var content = getContent(file, options);
-                //console.log(content);
                 file.contents = new Buffer(content);
             }
             catch (err) {
