@@ -5,6 +5,6 @@
 
 window.onload = function(){
 
-    console.log(SYST);
+    console.log(SYST, 'OK');
 
 };

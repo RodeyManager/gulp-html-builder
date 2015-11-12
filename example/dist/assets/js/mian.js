@@ -1,1 +1,0 @@
-;(function(){'use strict';var SYST=function(){this.name='Rodey';};window.SYST=new SYST();}).call(this);window.onload=function(){console.log(SYST);};document.body.addEventListener('click',function(evt){var text=document.querySelector('#content').innerHTML;alert(text);},false);

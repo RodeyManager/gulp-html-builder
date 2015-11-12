@@ -3,13 +3,15 @@
  */
 
 var gulp        = require('gulp'),
+    del         = require('del'),
     htmlBuilder = require('../index');
 
 gulp.task('build.css', function(){
 
+    //del.sync(['../assets/css/**/*.js']);
     gulp.src('src/buildCss.html')
         .pipe(htmlBuilder({
-            cssDir: 'dist/assets/js',
+            cssDir: 'dist/assets/css',
             filterPath: 'dist/'
         }))
         .pipe(gulp.dest('dist'));
@@ -18,10 +20,12 @@ gulp.task('build.css', function(){
 
 gulp.task('build.js', function(){
 
+    //del.sync(['../assets/js/**/*.js']);
     gulp.src('src/buildJs.html')
         .pipe(htmlBuilder({
             jsDir: 'dist/assets/js',
-            filterPath: 'dist/'
+            filterPath: 'dist/',
+            attrs: { async: 'true', defer: 'defer', charset: 'utf-8' }
         }))
         .pipe(gulp.dest('dist'));
 
@@ -46,4 +50,10 @@ gulp.task('build.html', function(){
 
 });
 
-gulp.task('default', ['build.css', 'build.js', 'build.html']);
+gulp.task('clean', function(){
+
+    del.sync(['dist/assets/**/*']);
+
+});
+
+gulp.task('default', ['clean', 'build.css', 'build.js', 'build.html']);

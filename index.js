@@ -64,10 +64,6 @@ function callBuildReplace(text, file, options){
     var baseDir         = options.baseDir || 'dist/assets/',
         jsDir           = options.jsDir || 'js',
         cssDir          = options.cssDir || 'css';
-    //导出文件路径
-    var dir             = 'css' === type ? cssDir : 'js' === type ? jsDir : baseDir;
-    var execteFile      = Tool.restructPath(baseDir, dir) + '/' + buildedFile;
-    //console.log(execteFile);
 
     if('css' === type){
         fileList        = getFileList(Tool.trim(ms[2]), linkRegx, hrefRegx);
@@ -92,6 +88,22 @@ function callBuildReplace(text, file, options){
         content         = jsmin(content, options).code;
     }
     //console.log(content);
+
+    //文件hash值
+    var hashRegx = /([\s\S]+?)\{\{\s*([\s\S]*?)[@|$]*hash\s*\}\}(.[\s\S]+?)$/gi;
+    if(hashRegx.test(buildedFile)){
+        var hash = Tool.getFileHash(content);
+        hashRegx.lastIndex = 0;
+        var bs = hashRegx.exec(buildedFile);
+        buildedFile = bs[1] + bs[2] + hash + bs[3];
+        console.log(bs, buildedFile, hash);
+    }
+
+    //导出文件路径
+    var dir             = 'css' === type ? cssDir : 'js' === type ? jsDir : baseDir,
+        execteDir       = Tool.restructPath(baseDir, dir) + '/',
+        execteFile      = execteDir + buildedFile;
+    //console.log(execteFile);
 
     //将内容写出到文件
     var isWrite         = Tool.writeFile(execteFile, content);
@@ -142,7 +154,7 @@ var getContent = function(file, options){
             type = Tool.getExtname(buildedFile);
         fileLink = fileLink.replace(filterPath, '');
 
-        return Tool.inserTag(type, fileLink);
+        return Tool.inserTag(type, fileLink, options.attrs);
 
     });
     return content;

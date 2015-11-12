@@ -26,6 +26,7 @@
   },
   "homepage": "https://github.com/RodeyManager/gulp-html-builder#readme",
   "devDependencies": {
+    "del": "^2.0.2",
     "gulp": "^3.9.0"
   },
   "dependencies": {

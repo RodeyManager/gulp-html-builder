@@ -4,6 +4,7 @@
 
 var fs      = require('fs'),
     path    = require('path'),
+    crypto  = require('crypto'),
     mkdirp  = require('mkdirp');
 
 var Tools = function(){};
@@ -13,6 +14,15 @@ Tools.prototype = {
     getFileContent: function(file){
         if(!fs.existsSync(file)) throw new Error('Cannot fond file: ' + file);
         return fs.readFileSync(file, 'utf8');
+    },
+
+    /**
+     * 获取文件hash值
+     * file: 文件内容
+     */
+    getFileHash: function(fileContent){
+        var buf = new Buffer(fileContent);
+        return crypto.createHash('md5').update(buf).digest('hex').slice(0, 10);
     },
 
     //根据指定的正则搜索匹配的内容
@@ -53,8 +63,8 @@ Tools.prototype = {
     },
 
     //替换标签
-    inserTag: function(type, link, options){
-        var attrs = this.parseData(options);
+    inserTag: function(type, link, attrs){
+        var attrs = attrs ? this.parseData(attrs) : '';
         if('css' === type)
             return '<link rel="stylesheet" type="text/css" href="' + link + '"' + attrs + '/>';
         else if('js' === type)
@@ -64,10 +74,10 @@ Tools.prototype = {
 
     parseData: function(data){
         if(!data || 'object' !== typeof data || data === {}) return '';
-        var s = ' ';
+        var s = '';
         for(var k in data){
             if(data[k])
-                s += ' ' + k + '=' + data[k];
+                s += ' ' + k + '="' + data[k] + '"';
         }
         return s;
     },
