@@ -143,6 +143,9 @@ var getContent = function(file, options){
         filterPath      = options.filterPath || '';
 
     var fileContents = file.contents.toString('utf8');
+    if(typeof fileContents === 'undefined'){
+        fileContents = Tool.getFileContent(file.path);
+    }
     var content = fileContents.replace(buildRegx, function($1){
 
         $1 = Tool.trim($1);
