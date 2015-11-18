@@ -22,7 +22,6 @@ combo and merge `css` and `js` to html. no matter the file is online or not.
 ```javascript
 var gulp = require('gulp');
 var htmlBuilder = require('gulp-html-builder');
-gulp.task('build.js', function(){
 
 gulp.src('src/buildJs.html')
     .pipe(htmlBuilder({
